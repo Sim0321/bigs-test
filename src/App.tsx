@@ -3,11 +3,13 @@
 // import viteLogo from "/vite.svg";
 // import "./App.css";
 // import axios from "axios";
-import Router from "./pages/Router";
+import Router from "@/pages/Router";
+import { GlobalStyle } from "@/Global/GlobalStyle";
 
 function App() {
   return (
     <>
+      <GlobalStyle />
       <Router />
     </>
   );

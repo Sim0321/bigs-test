@@ -3,14 +3,16 @@ import ReactDOM from "react-dom/client";
 import App from "@/App";
 
 import { BrowserRouter as Router } from "react-router-dom";
-import { GlobalStyle } from "@/Global/GlobalStyle";
+
+import { StoreProvider } from "./modules/Context";
+import { RootStore } from "./modules/RootStore";
+
+const rootStore = new RootStore();
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
-  <React.StrictMode>
+  <StoreProvider value={rootStore}>
     <Router>
-      <GlobalStyle>
-        <App />
-      </GlobalStyle>
+      <App />
     </Router>
-  </React.StrictMode>
+  </StoreProvider>
 );
