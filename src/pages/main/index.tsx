@@ -10,7 +10,6 @@ import { filterObject, searchObject } from "@/const";
 
 const Main = observer(() => {
   const { newsStore } = useStores();
-  console.log(newsStore.newsItem);
 
   const [searchValue, setSearchValue] = useState<string>("");
 
@@ -57,7 +56,11 @@ const Main = observer(() => {
               placeholder="검색어를 입력해주세요"
               width="420"
               rightSlot={<Icon name="IconSearch" size={20} />}
-              style={{ width: "450px", height: "40px", background: "#eef3f6" }}
+              style={{
+                minWidth: "200px",
+                height: "40px",
+                background: "#eef3f6",
+              }}
               value={searchValue}
               onChange={onChangeSearchValue}
             />

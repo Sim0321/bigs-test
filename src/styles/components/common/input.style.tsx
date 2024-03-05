@@ -15,7 +15,9 @@ export const InputWrapper = styled.div`
 `;
 
 export const Input = styled.input<InputProps>`
-  width: ${(props) => `${props.width}px`};
+  max-width: ${(props) => `${props.width}px`};
+  min-width: 300px;
+  width: 100%;
   height: 40px;
   box-sizing: border-box;
   outline: none;

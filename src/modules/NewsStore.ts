@@ -210,7 +210,6 @@ export class NewsStore {
       }
     } else {
       const item = this.news.find((el) => el.id === id);
-      // console.log(item);
       this.newsItem = item;
     }
   };

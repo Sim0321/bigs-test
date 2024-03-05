@@ -10,7 +10,6 @@ const Detail = observer(() => {
   const navigate = useNavigate();
 
   // 새로고침시 데이터 불러오기
-
   useEffect(() => {
     if (!newsStore.newsItem) {
       newsStore.setNewsItem(Number(param?.id) - 1);

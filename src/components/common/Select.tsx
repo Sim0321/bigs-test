@@ -24,7 +24,6 @@ const Select = observer(({ optionObj, width, name }: SelectProps) => {
 
   const toggleDrop = () => {
     setOpenDrop(!openDrop);
-    // onChange(selectedOption);
   };
   return (
     <Style.CustomSelect

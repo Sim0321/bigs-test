@@ -44,4 +44,18 @@ export const DetailWrap = styled.div`
     margin: 0 auto;
     cursor: pointer;
   }
+  @media screen and (min-width: 768px) and (max-width: 1023px) {
+    font-size: 1.4rem;
+    .to-list {
+      width: 100px;
+      font-size: 1.6rem;
+    }
+  }
+  @media screen and (max-width: 767px) {
+    font-size: 1.2rem;
+    .to-list {
+      width: 60px;
+      font-size: 1.2rem;
+    }
+  }
 `;

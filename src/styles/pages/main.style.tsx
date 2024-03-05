@@ -113,8 +113,79 @@ export const MainWrap = styled.div`
     }
     svg {
       cursor: pointer;
-      path {
-        /* fill: ; */
+    }
+  }
+
+  /* 데스크탑 */
+  /* @media screen and (min-width: 1024px) {
+  } */
+
+  /* 노트북 */
+  @media screen and (min-width: 768px) and (max-width: 1023px) {
+    max-width: 800px;
+  }
+
+  /* 모바일 */
+  @media screen and (max-width: 767px) {
+    min-width: 395px;
+    font-size: 1.3rem;
+    padding: 0 20px;
+    margin-top: 20px;
+    box-sizing: border-box;
+    .search__container {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      .search__keyword {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+    }
+    .news__total {
+      text-align: center;
+      span {
+        font-size: 1.4rem;
+        font-weight: bold;
+      }
+    }
+
+    .news__list-meta {
+      padding: 15px 10px;
+      font-size: 1.4rem;
+      .num {
+        max-width: 30px;
+        min-width: 20px;
+      }
+      .title {
+        max-width: 500px;
+        min-width: 200px;
+      }
+      .createdAt {
+        max-width: 100px;
+        min-width: 50px;
+      }
+    }
+
+    .news__list {
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      .news {
+        height: 40px;
+        font-size: 1.4rem;
+        .num {
+          max-width: 20px;
+          min-width: 20px;
+        }
+        .title {
+          max-width: 500px;
+          min-width: 200px;
+        }
+        .createdAt {
+          max-width: 100px;
+          min-width: 50px;
+        }
       }
     }
   }
