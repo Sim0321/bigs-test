@@ -10,49 +10,57 @@ import { filterObject, searchObject } from "@/const";
 
 const Main = observer(() => {
   const { newsStore } = useStores();
-  console.log(Math.ceil(newsStore.total / 10));
-  // console.log("newsStore ::", newsStore.news);
 
-  const [page, setPage] = useState<number>(newsStore.page);
-  console.log("page ::", page);
-  // const [sortBy, setSortBy] = useState<string>("");
+  const [searchValue, setSearchValue] = useState<string>("");
 
   useEffect(() => {
-    newsStore.setNews(page, "publishedAt", "");
-  }, [newsStore, page]);
+    newsStore.setNewsList();
+  }, [newsStore]);
 
   const clickPageNumber = (position: string) => {
     if (position === "start") {
-      setPage(1);
+      newsStore.setPage(1);
     }
     if (position === "prev") {
-      if (page > 1) {
-        setPage(page - 1);
+      if (newsStore.page > 1) {
+        newsStore.setPage(newsStore.page - 1);
       }
     }
     if (position === "next") {
-      if (page < Math.ceil(newsStore.total / 10)) {
-        setPage(page + 1);
+      if (newsStore.page < Math.ceil(newsStore.total / 10)) {
+        newsStore.setPage(newsStore.page + 1);
       }
     }
     if (position === "end") {
-      setPage(Math.ceil(newsStore.total / 10));
+      newsStore.setPage(Math.ceil(newsStore.total / 10));
     }
+  };
+
+  const onChangeSearchValue = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchValue(e.target.value);
+  };
+
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    newsStore.setSearchNews(searchValue);
   };
 
   return (
     <Style.MainWrap>
-      {/* <button onClick={clickTest}>+</button> */}
       <div className="search__container">
-        <Select optionObj={filterObject} width="250" />
+        <Select optionObj={filterObject} width="250" name="filter" />
         <div className="search__keyword">
-          <Select optionObj={searchObject} width="140" />
-          <Input
-            placeholder="검색어를 입력해주세요"
-            width="420"
-            rightSlot={<Icon name="IconSearch" size={20} />}
-            style={{ width: "450px", height: "40px", background: "#eef3f6" }}
-          />
+          <Select optionObj={searchObject} width="140" name="search" />
+          <form onSubmit={onSubmit}>
+            <Input
+              placeholder="검색어를 입력해주세요"
+              width="420"
+              rightSlot={<Icon name="IconSearch" size={20} />}
+              style={{ width: "450px", height: "40px", background: "#eef3f6" }}
+              value={searchValue}
+              onChange={onChangeSearchValue}
+            />
+          </form>
         </div>
       </div>
       <div className="news__total">
@@ -81,9 +89,9 @@ const Main = observer(() => {
         {Array.from({ length: Math.ceil(newsStore.total / 10) }).map(
           (_, index) => (
             <div
-              className={page === index + 1 ? "active" : "number"}
+              className={newsStore.page === index + 1 ? "active" : "number"}
               key={index}
-              onClick={() => setPage(index + 1)}
+              onClick={() => newsStore.setPage(index + 1)}
             >
               {index + 1}
             </div>

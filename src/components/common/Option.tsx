@@ -1,4 +1,6 @@
+import { useStores } from "@/modules/Context";
 import * as Style from "@/styles/components/common/option.style";
+import { observer } from "mobx-react";
 
 interface Label {
   label: string;
@@ -8,12 +10,23 @@ interface Label {
 interface OptionProps {
   optionObj: Label[];
   setNowOption: React.Dispatch<React.SetStateAction<string>>;
+  name: string;
 }
 
-export default function Options({ optionObj, setNowOption }: OptionProps) {
+const Options = observer(({ optionObj, setNowOption, name }: OptionProps) => {
+  const { newsStore } = useStores();
+  // console.log("name ::", name);
   const clickValue = (e: React.MouseEvent<HTMLDivElement>) => {
-    // console.log("e ::", e.currentTarget.innerText);
+    // console.log(e);
     setNowOption(e.currentTarget.innerText);
+    if (name === "filter") {
+      newsStore.setSortBy(e.currentTarget.innerText);
+      newsStore.setPage(1);
+    }
+    if (name === "search") {
+      const searchIn = e.currentTarget.id;
+      newsStore.setSearchIn(searchIn);
+    }
   };
 
   return (
@@ -21,13 +34,15 @@ export default function Options({ optionObj, setNowOption }: OptionProps) {
       {optionObj.map((option) => (
         <div
           className="option__item"
-          id={option.label}
+          id={option.value}
           key={option.value}
           onClick={clickValue}
         >
-          {option.value}
+          {option.label}
         </div>
       ))}
     </Style.Option>
   );
-}
+});
+
+export default Options;
