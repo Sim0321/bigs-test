@@ -1,5 +1,5 @@
 import { Route, Routes } from "react-router-dom";
-import MainPage from "@/pages/main/index";
+import MainPage from "@/pages/main";
 
 import DetailPage from "@/pages/news/Detail";
 

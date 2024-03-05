@@ -21,6 +21,13 @@ export const MainWrap = styled.div`
     }
   }
 
+  .news__total {
+    span {
+      font-size: 1.6rem;
+      font-weight: bold;
+    }
+  }
+
   .news__list-meta {
     padding: 30px 20px;
     border: 1px solid #f2f2f2;
@@ -50,12 +57,10 @@ export const MainWrap = styled.div`
     padding: 0 0px 0 21px;
     display: flex;
     flex-direction: column;
-    /* gap: 7px; */
     .news {
       display: flex;
       align-items: center;
       font-size: 1.6rem;
-      /* padding-bottom: 10px; */
       height: 40px;
       border-bottom: 1px solid #f2f2f2;
       transition: ${theme.transition.slow};
@@ -82,6 +87,34 @@ export const MainWrap = styled.div`
       &:hover {
         transform: scale(1.015);
         cursor: pointer;
+      }
+    }
+  }
+
+  .news__navigation {
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    width: 100%;
+    gap: 15px;
+    .number {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      font-size: 1.5rem;
+      color: #a0a0a0;
+      cursor: pointer;
+    }
+    .active {
+      color: #000;
+    }
+    svg {
+      cursor: pointer;
+      path {
+        /* fill: ; */
       }
     }
   }

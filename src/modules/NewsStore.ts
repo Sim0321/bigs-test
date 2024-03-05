@@ -29,6 +29,7 @@ class News {
   title: string;
   url: string;
   urlToImage: string;
+  message?: string;
 
   constructor(
     id: number,
@@ -56,67 +57,74 @@ export class NewsStore {
 
   news: Article[] = [];
   total: number = 0;
+  message: string | undefined;
+  page: number = 1;
 
   constructor(root: unknown) {
     makeObservable(this, {
       news: observable,
       total: observable,
+      message: observable,
+      page: observable,
       setNews: action,
     });
 
     this.rootStore = root;
   }
 
-  setNews = async (page: number) => {
+  setNews = async (page: number, sortBy: string, searchWord: string) => {
+    console.log("mobx page ::", page);
     try {
-      const response = await axios.get(
-        `https://newsapi.org/v2/top-headlines?country=kr&apiKey=${apikey}&pageSize=10&page=${page}`
-        // `https://newsapi.org/v2/top-headlines?country=kr&category=business&apiKey=${apikey}&pageSize=10&page=${page}`
-        // `https://newsapi.org/v2/top-headlines?country=kr&category=business&apiKey=${apikey}&pageSize=${page}`
-      );
-      console.log("새로 불러옴");
-      console.log(response.data);
-      this.news = response.data.articles.map(
-        (article: Article, i: number) =>
-          new News(
-            i + 1,
-            article.description,
-            article.publishedAt,
-            article.title,
-            article.url,
-            article.urlToImage,
-            article.author,
-            article.content
-          )
-      );
+      let apiUrl = `https://newsapi.org/v2/top-headlines?country=kr&category=business&apiKey=${apikey}&pageSize=10&page=${page}`;
+      // let apiUrl = `https://newsapi.org/v2/everything?apiKey=${apikey}&pageSize=10&page=${page}`;
+
+      if (sortBy) {
+        apiUrl += `&sortBy=${sortBy}`;
+      }
+      if (searchWord) {
+        apiUrl += `&q=${searchWord}`;
+      }
+      // console.log(apiUrl);
+      const response = await axios.get(apiUrl);
+      // const response = await axios.get(
+      //   `https://newsapi.org/v2/top-headlines?country=kr&apiKey=${apikey}&pageSize=10&page=${page}`
+      //   // `https://newsapi.org/v2/top-headlines?country=kr&category=business&apiKey=${apikey}&pageSize=10&page=${page}`
+      //   // `https://newsapi.org/v2/top-headlines?country=kr&category=business&apiKey=${apikey}&pageSize=${page}`
+      // );
+      // console.log("새로 불러옴");
+      // console.log(response.data);
+
+      if (response.data.totalResults === 0) {
+        this.message = "검색 결과가 없습니다.";
+      } else {
+        this.news = response.data.articles.map(
+          (article: Article, i: number) =>
+            new News(
+              (page - 1) * 10 + (i + 1),
+              article.description,
+              article.publishedAt,
+              article.title,
+              article.url,
+              article.urlToImage,
+              article.author,
+              article.content
+            )
+        );
+      }
 
       this.total = response.data.totalResults;
     } catch (e) {
       console.log(e);
+      this.message = "데이터를 불러오는 중에 오류가 발생했습니다.";
     }
   };
 
-  // nextPage = () => {
-  //   this.currentPage += 1;
-  // };
-
-  // prevPage = () => {
-  //   if (this.currentPage > 1) {
-  //     this.currentPage -= 1;
-  //   }
-  // };
-
-  // getPageNews = (page: number): Article[] => {
-  //   const startIndex = (page - 1) * this.pageSize;
-  //   const endIndex = startIndex + this.pageSize;
-  //   return this.news.slice(startIndex, endIndex);
-  // };
+  nextPage = () => {
+    this.page += 1;
+  };
+  prevPage = () => {
+    if (this.page > 1) {
+      this.page -= 1;
+    }
+  };
 }
-// createMovie(title, createdAt){
-//   this.news= [
-//     ...this.news,
-//     new news(this.news[this.news[title]]) ~~~
-//   ]
-// }
-
-//  또 다른 함수
