@@ -1,30 +1,26 @@
-# React + TypeScript + Vite
+# 과제테스트
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 배포
 
-Currently, two official plugins are available:
+## 사용 기술 및 라이브러리
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- react
+- typeScript(개발 생산성 향상 및 안전한 코드 작성을 위해 사용)
+- mobx
+- styled-components
 
-## Expanding the ESLint configuration
+## 고민한 부분
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- 최대한 공통 컴포넌트로 사용하려고 노력했다.
+  - icon,select,option, input 등은 확장성과 재사용성을 고려해 컴포넌트들을 구현했다.
+- 편한 유지보수를 위해 상태관리는 하나의 store에서만 로직구현했다.
+- open api의 쿼리스트링으로 정렬, 페이지네이션 등을 지원했지만, 오래된 순은 따로 지원하지 않아 모든 기능들을 직접 구현했다.
+  - newsList는 모든 data들을 보관하며 불변성을 유지하면서 news에 담고 컴포넌트에서는 news를 렌더링했다.
 
-- Configure the top-level `parserOptions` property like this:
+## 느낀 점
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+- 기존에는 꼭 전역적으로 필요한 애플리케이션 데이터만 상태관리로, 비동기 처리와 데이터관리는 react-query를 사용했다.
+- mobx는 처음 사용해봤지만 이틀이란 짧은 시간동안 완전히까지는 아니더라도 어떻게 동작하는지, 어떤 구조인지 알게되었다. mobx가 ts와 잘맞는다고는 알고 있었지만 정확히 어떤 부분이 잘맞는지 몰랐었다.
+- mobx는 class 기반인 OOP의 구조라는 것을 알게되었고, 그래서 ts와 잘맞는다고 생각했다.
+- 확실히 redux보다 훨씬 간결하지만 아직까지는 redux가 편하다고 느꼈지만 mobx가 되게 매력적이라고 느꼈고, 추후에 OOP를 공부하면서 mobx를 사용해볼 것 같다.
+- 시간이 짧다보니 컴포넌트 구분과 리펙토링을 못했다. 추후에 리펙토링을 해볼 것 같다.
