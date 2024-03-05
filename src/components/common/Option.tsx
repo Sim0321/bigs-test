@@ -15,9 +15,7 @@ interface OptionProps {
 
 const Options = observer(({ optionObj, setNowOption, name }: OptionProps) => {
   const { newsStore } = useStores();
-  // console.log("name ::", name);
   const clickValue = (e: React.MouseEvent<HTMLDivElement>) => {
-    // console.log(e);
     setNowOption(e.currentTarget.innerText);
     if (name === "filter") {
       newsStore.setSortBy(e.currentTarget.innerText);

@@ -10,6 +10,7 @@ import { filterObject, searchObject } from "@/const";
 
 const Main = observer(() => {
   const { newsStore } = useStores();
+  console.log(newsStore.newsItem);
 
   const [searchValue, setSearchValue] = useState<string>("");
 

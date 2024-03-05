@@ -51,6 +51,7 @@ export class NewsStore {
 
   newsList: Article[] = [];
   news: Article[] = [];
+  newsItem: Article | undefined = undefined;
   total: number = 0;
   message: string | undefined;
   page: number = 1;
@@ -66,11 +67,14 @@ export class NewsStore {
       message: observable,
       page: observable,
       searchIn: observable,
+      newsItem: observable,
 
       setNewsList: action,
       setPage: action,
       setSortBy: action,
       setSearchIn: action,
+      setSearchNews: action,
+      setNewsItem: action,
     });
 
     this.rootStore = root;
@@ -106,6 +110,8 @@ export class NewsStore {
       }
 
       this.total = response.data.totalResults;
+
+      console.log(response.data);
     } catch (e) {
       console.log(e);
       this.message = "데이터를 불러오는 중에 오류가 발생했습니다.";
@@ -155,8 +161,6 @@ export class NewsStore {
   };
 
   setSearchNews = async (searchValue: string) => {
-    // console.log("searchValue ::", searchValue);
-    // console.log("In ::", this.searchIn);
     try {
       const response = await axios.get(
         `https://newsapi.org/v2/top-headlines?q=${searchValue}&country=kr&category=business&apiKey=${apikey}&pageSize=100&searchIn=${this.searchIn}`
@@ -189,6 +193,25 @@ export class NewsStore {
     } catch (e) {
       console.log(e);
       this.message = "데이터를 불러오는 중에 오류가 발생했습니다.";
+    }
+  };
+
+  setNewsItem = async (id: number) => {
+    if (this.news.length === 0) {
+      try {
+        const response = await axios.get(
+          `https://newsapi.org/v2/top-headlines?country=kr&category=business&apiKey=${apikey}&pageSize=100`
+        );
+
+        const data = response.data.articles[id];
+        this.newsItem = data;
+      } catch (e) {
+        console.log(e);
+      }
+    } else {
+      const item = this.news.find((el) => el.id === id);
+      // console.log(item);
+      this.newsItem = item;
     }
   };
 }
